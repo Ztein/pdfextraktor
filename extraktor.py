@@ -7,6 +7,19 @@ from docx import Document
 
 from ImageInterpreter import ImageInterpreter
 
+def ensure_folders_exist():
+    required_folders = [
+        'to_extract',
+        'extracting',
+        'output',
+        'finished_extracting'
+    ]
+    
+    for folder in required_folders:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+            print(f"Created directory: {folder}")
+
 def extract_images_and_text(pdf_path, output_folder, imgInt, width_threshold=500, height_threshold=500):
     # Skapa ett mappnamn baserat på PDF-filens namn
     pdf_name = os.path.splitext(os.path.basename(pdf_path))[0]
@@ -202,6 +215,7 @@ def process_files():
         shutil.move(extracting_path, finished_path)
 
 if __name__ == "__main__":
+    ensure_folders_exist()
     process_files()
 
 '''
